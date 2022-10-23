@@ -1,6 +1,5 @@
 import React from "react";
 
-import { ScreenContainerProps } from "react-native-screens";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -25,19 +24,19 @@ function Tabs() {
         }}
       />
       <Tab.Screen
-        name="Config"
-        component={Config}
-        options={{
-          tabBarLabel: "Config",
-          tabBarIcon: () => <BsFillGearFill />,
-        }}
-      />
-      <Tab.Screen
         name="Menu"
         component={Menu}
         options={{
           tabBarLabel: "Menu",
           tabBarIcon: () => <AiOutlineMenu />,
+        }}
+      />
+            <Tab.Screen
+        name="Config"
+        component={Config}
+        options={{
+          tabBarLabel: "Config",
+          tabBarIcon: () => <BsFillGearFill />,
         }}
       />
     </Tab.Navigator>
