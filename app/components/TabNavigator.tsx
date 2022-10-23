@@ -29,7 +29,9 @@ function Tabs() {
         options={{
           tabBarLabel: "Menu",
           tabBarIcon: () => <AiOutlineMenu />,
+          headerShown: false
         }}
+        
       />
             <Tab.Screen
         name="Config"
@@ -37,6 +39,7 @@ function Tabs() {
         options={{
           tabBarLabel: "Config",
           tabBarIcon: () => <BsFillGearFill />,
+          headerShown: false
         }}
       />
     </Tab.Navigator>
