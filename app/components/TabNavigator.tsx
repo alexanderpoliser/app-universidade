@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-import { ScreenContainerProps } from "react-native-screens";
+import { ImageBackground, useWindowDimensions } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -10,10 +10,12 @@ import { BsFillGearFill } from "react-icons/bs";
 import Home from "../pages/Home/Home";
 import Config from "../pages/Config/Config";
 import Menu from "../pages/Menu/Menu";
+import { defaultTheme } from "../../defaultTheme";
+import background from "../../assets/bg/bg-1.jpg";
 
 const Tab = createBottomTabNavigator();
 
-function Tabs() {
+function Tabs(props: any) {
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -25,6 +27,15 @@ function Tabs() {
         }}
       />
       <Tab.Screen
+        name="Menu"
+        component={Menu}
+        options={{
+          tabBarLabel: "Menu",
+          tabBarIcon: () => <AiOutlineMenu />,
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
         name="Config"
         component={Config}
         options={{
@@ -32,22 +43,23 @@ function Tabs() {
           tabBarIcon: () => <BsFillGearFill />,
         }}
       />
-      <Tab.Screen
-        name="Menu"
-        component={Menu}
-        options={{
-          tabBarLabel: "Menu",
-          tabBarIcon: () => <AiOutlineMenu />,
-        }}
-      />
     </Tab.Navigator>
   );
 }
 
 export default function App() {
+  const { width, height } = useWindowDimensions();
+
   return (
-    <NavigationContainer independent={true}>
-      <Tabs />
-    </NavigationContainer>
+    <ImageBackground
+      source={{
+        uri: background,
+      }}
+      style={{ flex: 1, width, height }}
+    >
+      <NavigationContainer independent={true} theme={defaultTheme}>
+        <Tabs />
+      </NavigationContainer>
+    </ImageBackground>
   );
 }
