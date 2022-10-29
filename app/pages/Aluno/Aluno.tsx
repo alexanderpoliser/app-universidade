@@ -1,46 +1,74 @@
 import React from "react";
-import { View, Button, TextInput, StyleSheet, FlatList } from "react-native";
+import { View, Button, TextInput, StyleSheet, FlatList, ActivityIndicator, Text, Image } from "react-native";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import db from "../../../services/firebase/firebase";
-
-const collecRef = collection(db, "Aluno");
+import CardAluno from "../../components/CardAluno";
+import Aluno from "../../models/Aluno";
 
 export default function App() {
   const [nome, setNome] = React.useState("");
   const [foto, setFoto] = React.useState("");
   const [cidade, setCidade] = React.useState("");
   const [endereco, setEndereco] = React.useState("");
+  const [users, setUsers] = React.useState<Aluno[]>([]);
+  const collecRef = collection(db, "Aluno");
 
-  const cadastrarAluno = async () => {
+  React.useEffect(() => {
+    carregaAlunos();
+  }, []);
+
+  function carregaAlunos() {
+    const listUser: Aluno[] = [];
+    getDocs(collecRef)
+    .then((snapshot) => {
+        snapshot.forEach(documentSnapshot => {
+          listUser.push({
+            ...documentSnapshot.data() as Aluno,
+            key: documentSnapshot.id
+          })
+        })
+        setUsers(listUser);
+    })
+  }
+
+  function limpaCampos() {
+    setNome("")
+    setFoto("")
+    setCidade("")
+    setEndereco("")
+  }
+  
+  async function cadastrarAluno() {
     try {
       addDoc(collection(db, "Aluno"), {
         nome: nome,
         foto: foto,
         cidade: cidade,
         endereco: endereco,
-      });
-      window.alert("Aluno cadastrado!");
-      loadAluno();
+      }).then(async function(value){
+        if (await cadastraHistorico(value.id)) {
+          window.alert("Aluno cadastrado!");
+          limpaCampos();
+          carregaAlunos();
+        }
+      })
     } catch (error) {
       window.alert("Não foi possível cadastrar o aluno");
     }
   };
 
-  function loadAluno() {
-    getDocs(collecRef)
-      .then((snapshot) => {
-        for (let i = 0; i < snapshot.docs.length; i++) {
-          console.log("Dados[", i, "]: ", snapshot.docs[i].data());
-        }
+  async function cadastraHistorico(matricula: String) {
+    try {
+      addDoc(collection(db, "Historico"), {
+        matricula: matricula      
       })
-      .catch((err) => {
-        console.log(err.message);
-      });
+      return true;
+    } catch (error) {
+      window.alert("Não foi possível cadastrar o historico");
+      return false;
+    }
   }
-  React.useEffect(() => {
-    loadAluno();
-  }, []);
-
+    
   function validaCampos() {
     if (nome == "") {
       window.alert("Insira um nome válido!");
@@ -50,11 +78,11 @@ export default function App() {
       window.alert("Insira uma cidade válida!");
     } else if (endereco == "") {
       window.alert("Insira um endereço válido!");
-    } else cadastrarAluno();
+    } else console.log(cadastrarAluno());
   }
 
   return (
-    <View>
+    <View style={{flex:1}}>
       <TextInput
         style={styles.TextInput}
         value={nome}
@@ -94,7 +122,17 @@ export default function App() {
         color="#2196f3"
         accessibilityLabel="Cadastrar Aluno"
       />
+        <FlatList
+          data={users}
+          renderItem={({ item }) => (
+          <>
+            <CardAluno nome={item.nome} foto={item.foto} cidade={item.cidade} endereco={''} />
+          </>
+          )}
+        />
+
     </View>
+
   );
 }
 
