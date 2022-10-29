@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Button, TextInput, StyleSheet } from "react-native";
+import { View, Button, TextInput, StyleSheet, FlatList } from "react-native";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import db from "../../../services/firebase/firebase";
 
@@ -11,16 +11,20 @@ export default function App() {
   const [cidade, setCidade] = React.useState("");
   const [endereco, setEndereco] = React.useState("");
 
-  function cadastrarAluno() {
-    addDoc(collection(db, "Aluno"), {
-      nome: nome,
-      foto: foto,
-      cidade: cidade,
-      endereco: endereco,
-    });
-    window.alert("Aluno cadastrado!");
-    loadAluno();
-  }
+  const cadastrarAluno = async () => {
+    try {
+      addDoc(collection(db, "Aluno"), {
+        nome: nome,
+        foto: foto,
+        cidade: cidade,
+        endereco: endereco,
+      });
+      window.alert("Aluno cadastrado!");
+      loadAluno();
+    } catch (error) {
+      window.alert("Não foi possível cadastrar o aluno");
+    }
+  };
 
   function loadAluno() {
     getDocs(collecRef)
@@ -33,7 +37,6 @@ export default function App() {
         console.log(err.message);
       });
   }
-
   React.useEffect(() => {
     loadAluno();
   }, []);
@@ -102,5 +105,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     margin: 10,
     padding: 3,
+    color: "white",
   },
 });
