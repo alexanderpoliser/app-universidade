@@ -4,8 +4,11 @@ import { View, Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import Aluno from "../Aluno/Aluno";
 import { defaultTheme } from "../../../defaultTheme";
+
+import Aluno from "../Aluno/Aluno";
+import Professor from "../Professor/Professor";
+import Disciplina from "../Disciplina/Disciplina";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,6 +18,16 @@ function Menu(props: any) {
       <Button
         title="Aluno"
         onPress={() => props.navigation.navigate("Aluno")}
+        color="#2196f3"
+      />
+      <Button
+        title="Professor"
+        onPress={() => props.navigation.navigate("Professor")}
+        color="#2196f3"
+      />
+      <Button
+        title="Disciplina"
+        onPress={() => props.navigation.navigate("Disciplina")}
         color="#2196f3"
       />
     </View>
@@ -27,6 +40,8 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="Menu" component={Menu} />
         <Stack.Screen name="Aluno" component={Aluno} />
+        <Stack.Screen name="Professor" component={Professor} />
+        <Stack.Screen name="Disciplina" component={Disciplina} />
       </Stack.Navigator>
     </NavigationContainer>
   );
