@@ -1,7 +1,6 @@
-export default interface Aluno {
+export default interface Professor {
   key?: String;
   nome: String;
-  foto: String;
   endereco: String;
   cidade: String;
 }
