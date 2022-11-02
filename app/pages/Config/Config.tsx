@@ -8,7 +8,6 @@ export default function App() {
     background1: require("../../../assets/bg/bg-1.jpg"),
   };
 
-  console.log("teseaaaaaaa", defaultImageBackground);
   const imageBackground2 = {
     background2: require("../../../assets/bg/bg-2.jpg"),
   };
@@ -25,6 +24,7 @@ export default function App() {
       console.log("Houve um erro", error);
     }
   };
+  
   const salvaBackground2 = async () => {
     try {
       const strBackground = JSON.stringify(imageBackground2);
@@ -44,8 +44,7 @@ export default function App() {
 
   const getImageBackground = async (key: string) => {
     try {
-      const imageBackground = AsyncStorage.getItem(key);
-      console.log(imageBackground);
+      AsyncStorage.getItem(key);
     } catch (erro) {
       console.log("Erro");
     }

@@ -49,23 +49,50 @@ function Tabs() {
 }
 
 export default function App() {
-  const [background, setBackground] = React.useState<String>("");
+  const defaultImageBackground = { background1: require("../../assets/bg/bg-1.jpg")};
+  const strBackground = JSON.stringify(defaultImageBackground);
+  const [background, setBackground] = React.useState<String>(strBackground);
 
-  const getImageBackground: (value: string) => void = async (key: string) => {
+
+  const setDefaultBackground = async (key: string) => {
+    try {
+      const teste = AsyncStorage.getItem(key);
+      teste.then((value) => {
+        if (value == null) {
+          salvaBackground();
+        }
+      })      
+    } catch (erro) {
+      console.log("Erro");
+    }
+  };
+
+  const salvaBackground = async () => {
+    try {
+      const strBackground = JSON.stringify(defaultImageBackground);
+      console.log(strBackground);
+      await AsyncStorage.setItem("@background", strBackground);
+    } catch (error) {
+      console.log("Houve um erro", error);
+    }
+  };
+  
+  const getImageBackground = async (key: string) => {
     try {
       const imageBackground = AsyncStorage.getItem(key);
       imageBackground.then((background) => {
         const backgroundObject = JSON.parse(background!);
-        const getBackgroundObjectValue: String[] =
-          Object.values(backgroundObject);
+        const getBackgroundObjectValue: String[] = Object.values(backgroundObject);
         setBackground(getBackgroundObjectValue[0]);
       });
     } catch (erro) {
       console.log("Erro");
     }
   };
+  
   React.useEffect(() => {
     getImageBackground("@background");
+    setDefaultBackground("@background");
   }, []);
 
   const { width, height } = useWindowDimensions();
