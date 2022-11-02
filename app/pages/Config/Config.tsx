@@ -1,25 +1,68 @@
 import React from "react";
 import { View, Text, Button, Image } from "react-native";
 
-export default function App() {
-  const image1 = require("../../../assets/bg/bg-1.jpg");
-  const image2 = require("../../../assets/bg/bg-2.jpg");
-  const image3 = require("../../../assets/bg/bg-3.jpg");
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-  const [background, setBackground] = React.useState(image1);
-  const [numBackground, setNumBackground] = React.useState(1);
+export default function App() {
+  const defaultImageBackground = {
+    background1: require("../../../assets/bg/bg-1.jpg"),
+  };
+
+  console.log("teseaaaaaaa", defaultImageBackground);
+  const imageBackground2 = {
+    background2: require("../../../assets/bg/bg-2.jpg"),
+  };
+
+  const imageBackground3 = {
+    background3: require("../../../assets/bg/bg-3.jpg"),
+  };
+
+  const salvaBackground = async () => {
+    try {
+      const strBackground = JSON.stringify(defaultImageBackground);
+      await AsyncStorage.setItem("@background", strBackground);
+    } catch (error) {
+      console.log("Houve um erro", error);
+    }
+  };
+  const salvaBackground2 = async () => {
+    try {
+      const strBackground = JSON.stringify(imageBackground2);
+      await AsyncStorage.setItem("@background", strBackground);
+    } catch (error) {
+      console.log("Houve um erro", error);
+    }
+  };
+  const salvaBackground3 = async () => {
+    try {
+      const strBackground = JSON.stringify(imageBackground3);
+      await AsyncStorage.setItem("@background", strBackground);
+    } catch (error) {
+      console.log("Houve um erro", error);
+    }
+  };
+
+  const getImageBackground = async (key: string) => {
+    try {
+      const imageBackground = AsyncStorage.getItem(key);
+      console.log(imageBackground);
+    } catch (erro) {
+      console.log("Erro");
+    }
+  };
 
   function changeBackground(numBackground: number) {
     if (numBackground == 1) {
-      setBackground(image1);
-      return background;
+      salvaBackground();
+      getImageBackground("@background");
     } else if (numBackground == 2) {
-      setBackground(image2);
-      return background;
+      salvaBackground2();
+      getImageBackground("@background");
     } else if (numBackground == 3) {
-      setBackground(image3);
-      return background;
+      salvaBackground3();
+      getImageBackground("@background");
     }
+    document.location.reload();
   }
 
   return (
@@ -28,15 +71,6 @@ export default function App() {
       <Button title="Background 1" onPress={() => changeBackground(1)}></Button>
       <Button title="Background 2" onPress={() => changeBackground(2)}></Button>
       <Button title="Background 3" onPress={() => changeBackground(3)}></Button>
-      <Image
-        style={{
-          width: "100px",
-          height: "100px",
-          borderRadius: 50,
-          marginBottom: 10,
-        }}
-        source={{ uri: background }}
-      ></Image>
     </View>
   );
 }
