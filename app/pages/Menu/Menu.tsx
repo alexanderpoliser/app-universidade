@@ -10,6 +10,7 @@ import Aluno from "../Aluno/Aluno";
 import Professor from "../Professor/Professor";
 import Disciplina from "../Disciplina/Disciplina";
 import Turma from "../Turma/Turma";
+import Historico from "../Historico/Historico";
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +37,11 @@ function Menu(props: any) {
         onPress={() => props.navigation.navigate("Turma")}
         color="#2196f3"
       />
+      <Button
+        title="Historico"
+        onPress={() => props.navigation.navigate("Historico")}
+        color="#2196f3"
+      />
     </View>
   );
 }
@@ -49,6 +55,7 @@ export default function App() {
         <Stack.Screen name="Professor" component={Professor} />
         <Stack.Screen name="Disciplina" component={Disciplina} />
         <Stack.Screen name="Turma" component={Turma} />
+        <Stack.Screen name="Historico" component={Historico} />
       </Stack.Navigator>
     </NavigationContainer>
   );
