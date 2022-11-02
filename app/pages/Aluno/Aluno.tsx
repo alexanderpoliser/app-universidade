@@ -62,8 +62,7 @@ export default function App() {
         foto: foto,
         cidade: cidade,
         endereco: endereco,
-      }).then(async function (value) {
-        if (await cadastraHistorico(value.id)) {
+      }).then(async function () {{
           window.alert("Aluno cadastrado!");
           limpaCampos();
           carregaAlunos();
@@ -71,18 +70,6 @@ export default function App() {
       });
     } catch (error) {
       window.alert("Não foi possível cadastrar o aluno");
-    }
-  }
-
-  async function cadastraHistorico(matricula: String) {
-    try {
-      addDoc(collection(db, "Historico"), {
-        matricula: matricula,
-      });
-      return true;
-    } catch (error) {
-      window.alert("Não foi possível cadastrar o historico");
-      return false;
     }
   }
 
