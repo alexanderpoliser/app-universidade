@@ -13,32 +13,33 @@ import {
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import db from "../../../services/firebase/firebase";
 
-import Professor from "../../models/Professor";
-import CardProfessor from "../../components/CardProfessor";
+import Historico from "../../models/Historico";
+import CardHistorico from "../../components/CardHistorico";
 
 export default function App() {
-  const [nome, setNome] = React.useState("");
-  const [endereco, setEndereco] = React.useState("");
-  const [cidade, setCidade] = React.useState("");
-  const [professor, setProfessores] = React.useState<Professor[]>([]);
+  const [matricula, setMatricula] = React.useState("");
+  const [codTurma, setCodTurma] = React.useState("");
+  const [frequencia, setFrequencia] = React.useState("");
+  const [nota, setNota] = React.useState("");
+  const [historico, setHistorico] = React.useState<Historico[]>([]);
   const [loading, setLoading] = React.useState(true);
   const { width, height } = useWindowDimensions();
-  const collecRef = collection(db, "Professor");
+  const collecRef = collection(db, "Historico");
 
   React.useEffect(() => {
-    carregaProfessor();
+    carregaHistorico();
   }, []);
 
-  function carregaProfessor() {
-    const listProfessores: Professor[] = [];
+  function carregaHistorico() {
+    const listHistoricos: Historico[] = [];
     getDocs(collecRef).then((snapshot) => {
       snapshot.forEach((documentSnapshot) => {
-        listProfessores.push({
-          ...(documentSnapshot.data() as Professor),
+        listHistoricos.push({
+          ...(documentSnapshot.data() as Historico),
           key: documentSnapshot.id,
         });
       });
-      setProfessores(listProfessores);
+      setHistorico(listHistoricos);
       setLoading(false);
     });
   }
@@ -50,76 +51,89 @@ export default function App() {
     );
   }
   function limpaCampos() {
-    setNome("");
-    setEndereco("");
-    setCidade("");
+    setMatricula("");
+    setCodTurma("");
+    setFrequencia("");
+    setNota("");
   }
 
-  async function cadastrarProfessor() {
+  async function cadastrarHistorico() {
     try {
-      addDoc(collection(db, "Professor"), {
-        nome: nome,
-        endereco: endereco,
-        cidade: cidade,
+      addDoc(collection(db, "Historico"), {
+        matricula: matricula,
+        cod_turma: codTurma,
+        frequencia: frequencia,
+        nota: nota,
       }).then(async function () {
         limpaCampos();
-        carregaProfessor();
+        carregaHistorico();
       });
     } catch (error) {
       window.alert("Não foi possível cadastrar o professor");
     }
   }
   function validaCampos() {
-    if (nome == "") {
-      window.alert("Insira um nome de disciplina válido!");
-    } else if (endereco == "") {
-      window.alert("Insira uma carga horária válida!");
-    } else if (cidade == "") {
-      window.alert("Insira uma carga horária válida!");
-    } else cadastrarProfessor();
+    if (matricula == "") {
+      window.alert("Insira uma matricula válida!");
+    } else if (codTurma == "") {
+      window.alert("Insira um código de turma válido!");
+    } else if (frequencia == "") {
+      window.alert("Insira uma frequência válida!");
+    } else if (nota == "") {
+      window.alert("Insira uma nota válida!");
+    } else cadastrarHistorico();
   }
 
   return (
     <View style={{ flex: 1 }}>
       <TextInput
+        value={matricula}
         style={styles.TextInput}
-        value={nome}
-        placeholder="Digite seu nome!"
+        placeholder="Digite a matricula!"
         onChangeText={(text) => {
-          setNome(text);
+          setMatricula(text);
         }}
       />
       <TextInput
-        value={cidade}
+        value={frequencia}
         style={styles.TextInput}
-        placeholder="Digite sua cidade!"
+        placeholder="Digite a frequência!"
         onChangeText={(text) => {
-          setCidade(text);
+          setFrequencia(text);
         }}
       />
       <TextInput
-        value={endereco}
+        value={nota}
         style={styles.TextInput}
-        placeholder="Digite seu endereço!"
+        placeholder="Digite a nota!"
         onChangeText={(text) => {
-          setEndereco(text);
+          setNota(text);
+        }}
+      />
+      <TextInput
+        value={codTurma}
+        style={styles.TextInput}
+        placeholder="Digite o código da turma!"
+        onChangeText={(text) => {
+          setCodTurma(text);
         }}
       />
 
       <Button
         onPress={validaCampos}
-        title="Cadastrar Professor"
+        title="Cadastrar Historico"
         color="#2196f3"
-        accessibilityLabel="Cadastrar Professor"
+        accessibilityLabel="Cadastrar Historico"
       />
       <FlatList
-        data={professor}
+        data={historico}
         renderItem={({ item }) => (
           <>
-            <CardProfessor
-              nome={item.nome}
-              cidade={item.cidade}
-              endereco={""}
+            <CardHistorico
+              matricula={item.matricula}
+              cod_turma={item.cod_turma}
+              frequencia={item.frequencia}
+              nota={item.nota}
             />
           </>
         )}
