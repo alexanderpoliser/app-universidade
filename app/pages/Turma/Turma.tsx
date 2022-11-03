@@ -16,7 +16,7 @@ import db from "../../../services/firebase/firebase";
 import Turma from "../../models/Turma";
 import CardTurma from "../../components/CardTurma";
 
-export default function App() {
+export default function App({navigation}:any) {
   const [codDisc, setCodDisc] = React.useState("");
   const [codProf, setcodProf] = React.useState("");
   const [ano, setAno] = React.useState("");
@@ -131,9 +131,10 @@ export default function App() {
             <CardTurma
               ano={item.ano}
               horario={item.horario} 
-              cod_disc={item.cod_disc} 
+              cod_disc={item.cod_disc}
               cod_prof={item.cod_prof}
-              key_value={item.key}          
+              key_value={item.key}
+              navigation={navigation}
               />
           </>
         )}

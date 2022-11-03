@@ -1,11 +1,10 @@
 import React from "react";
-import { View, Text } from "react-native";
-import Turma from "../models/Turma";
+import { View, Text, Button } from "react-native";
 
 import { doc, getDoc } from "firebase/firestore";
 import db from "../../services/firebase/firebase";
 
-export default function App(props: Turma) {
+export default function App(props: any) {
   const [professorNome, setProfessor] = React.useState("")
   const [disciplinaNome, setDisciplina] = React.useState("")
 
@@ -54,10 +53,13 @@ export default function App(props: Turma) {
       <Text>{props.horario}</Text>
       <Text>Cod Disciplina: {disciplinaNome}</Text>
       <Text>Cod Professor: {professorNome} </Text>
+      <Button
+        onPress={() => props.navigation.navigate("Detalhe Turma", {cod_turma:props.key_value})}
+        title="Detalhe turma"
+        color="#841584"
+        accessibilityLabel="Learn more about this purple button"
+      />      
     </View>
   );
-}
-function getDisciplina() {
-  throw new Error("Function not implemented.");
 }
 

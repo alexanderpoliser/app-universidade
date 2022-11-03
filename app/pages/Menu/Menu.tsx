@@ -11,6 +11,7 @@ import Professor from "../Professor/Professor";
 import Disciplina from "../Disciplina/Disciplina";
 import Turma from "../Turma/Turma";
 import Historico from "../Historico/Historico";
+import DetalheTurma from "../DetalhesTurma/DetalhesTurma"
 
 const Stack = createNativeStackNavigator();
 
@@ -54,6 +55,7 @@ export default function App() {
         <Stack.Screen name="Aluno" component={Aluno} />
         <Stack.Screen name="Professor" component={Professor} />
         <Stack.Screen name="Disciplina" component={Disciplina} />
+        <Stack.Screen name="Detalhe Turma" component={DetalheTurma} />
         <Stack.Screen name="Turma" component={Turma} />
         <Stack.Screen name="Historico" component={Historico} />
       </Stack.Navigator>

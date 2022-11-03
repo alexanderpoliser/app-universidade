@@ -1,4 +1,5 @@
 export default interface Turma {
+    navigation: any;
     key?: String;
     key_value: String | undefined;
     cod_disc: String;
