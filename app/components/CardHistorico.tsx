@@ -14,7 +14,6 @@ export default function App(props: Historico) {
 
     if (docSnap.exists()) {
       const nomeAluno = docSnap.data()["nome"];
-      console.log(nomeAluno);
       setNomeAluno(nomeAluno);
     } else {
       console.log("No such document!");
@@ -39,7 +38,7 @@ export default function App(props: Historico) {
       <Text style={{ fontWeight: "500" }}>
         Código da Turma: {props.cod_turma}
       </Text>
-      <Text>{nomeAluno}</Text>
+      <Text>Nome:{nomeAluno}</Text>
       <Text>Nota: {props.nota}</Text>
       <Text>Frequência: {props.frequencia}</Text>
     </View>
