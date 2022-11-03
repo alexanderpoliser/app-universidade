@@ -13,17 +13,16 @@ import {
 import {collection, query, where, doc, getDoc, getDocs,documentId } from "firebase/firestore";
 import db from "../../../services/firebase/firebase";
 import Aluno from "../../models/Aluno";
-import CardAluno from "../../components/CardDetalheAluno";
+import CardDetalheAluno from "../../components/CardDetalheAluno";
 
-export default function App({route}: any) {
-
-  const [loading, setLoading] = React.useState(true);
+export default function App({route, navigation}: any) {
+  const [loading, setLoading] = React.useState(false);
   const [alunos, setAlunos] = React.useState<Aluno[]>([]);
   const { width, height } = useWindowDimensions();
 
 
   async function getMatricula() {
-    const turmaId = route.params['cod_turma']
+    const turmaId = route.params['cod_turma']    
     const historicoRef = collection(db, "Historico");
     const q = query(historicoRef, where("cod_turma", "==", turmaId));
     const querySnapshot = await getDocs(q);
@@ -31,9 +30,10 @@ export default function App({route}: any) {
       getAlunos(doc.data()["matricula"]);
     });
   }
-
+    
   const listAlunos: Aluno[] = [];
   async function getAlunos(matricula: string) {
+  
     const alunoRef = collection(db, "Aluno");
     const q = query(alunoRef, where(documentId(), "==", matricula));
     await getDocs(q).then((snapshot) => {
@@ -67,11 +67,13 @@ export default function App({route}: any) {
         data={alunos}
         renderItem={({ item }) => (
           <>
-            <CardAluno
+            <CardDetalheAluno
               nome={item.nome}
               foto={item.foto}
               cidade={item.cidade}
               endereco={""}
+              key_value={item.key}
+              navigation={navigation}
             />
           </>
         )}

@@ -39,14 +39,14 @@ export default function App(props: any) {
 
   return (
     <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        backgroundColor: "#D9D9D9",
-        padding: 20,
-        margin: 20,
-        borderRadius: 20,
-      }}
+    style={{
+      flex: 1,
+      alignItems: "center",
+      backgroundColor: "#D9D9D9",
+      padding: 20,
+      margin: 20,
+      borderRadius: 20,
+    }}
     >
       <Text style={{ fontWeight: "500" }}>Código Turma: {props.key_value}</Text>
       <Text>{props.ano}</Text>
