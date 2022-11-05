@@ -80,6 +80,7 @@ export default function App({ route, navigation }: any) {
         nota: nota,
       }).then(async function () {
         limpaCampos();
+        window.alert("Aluno Cadastrado!")
         carregaHistorico();
       });
     } catch (error) {
