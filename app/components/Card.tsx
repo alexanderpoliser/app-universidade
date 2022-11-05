@@ -27,7 +27,7 @@ export default function App(props: Card) {
       </View>
 
       <Text style={{ fontWeight: "500" }}>{props.name}</Text>
-      <Text>{props.ra}</Text>
+      <Text>RA: {props.ra}</Text>
     </View>
   );
 }
