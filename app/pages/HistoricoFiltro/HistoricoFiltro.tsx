@@ -39,7 +39,7 @@ export default function App({ navigation }: any) {
     });
   }
 
-  function carregaHistoricoFiltroNota() {
+  function carregaHistoricoFiltroNotaCrescente() {
     const listHistoricos: Historico[] = [];
     getDocs(collecRef).then((snapshot) => {
       snapshot.forEach((documentSnapshot) => {
@@ -50,6 +50,22 @@ export default function App({ navigation }: any) {
       });
       listHistoricos.sort(
         (h1,h2) => (parseFloat(h1.nota) < parseFloat(h2.nota)) ? 1 : (parseFloat(h1.nota) > parseFloat(h2.nota)) ? -1 : 0);
+      setHistorico(listHistoricos);
+      setLoading(false);
+    });
+  }
+
+  function carregaHistoricoFiltroNotaDecrescente() {
+    const listHistoricos: Historico[] = [];
+    getDocs(collecRef).then((snapshot) => {
+      snapshot.forEach((documentSnapshot) => {
+        listHistoricos.push({
+          ...(documentSnapshot.data() as Historico),
+          key: documentSnapshot.id,
+        });
+      });
+      listHistoricos.sort(
+        (h1,h2) => (parseFloat(h1.nota) > parseFloat(h2.nota)) ? 1 : (parseFloat(h1.nota) < parseFloat(h2.nota)) ? -1 : 0);
       setHistorico(listHistoricos);
       setLoading(false);
     });
@@ -68,12 +84,32 @@ export default function App({ navigation }: any) {
     <View style={{ marginVertical: 4, marginTop: 10 }}>
         <Button
             onPress={() => 
-            {window.alert("Filtrando Nota!");
-            carregaHistoricoFiltroNota();}}
-            title="Filtra Nota"
+            {window.alert("Filtrando Nota (CRESCENTE)!");
+            carregaHistoricoFiltroNotaCrescente();}}
+            title="Filtro Nota (CRESCENTE)"
             color="#2196f3"
             accessibilityLabel="Filtrando Nota!"
         />
+    </View>
+    <View style={{ marginVertical: 4, marginTop: 10 }}>
+        <Button
+            onPress={() => 
+              {window.alert("Filtrando Nota (DECRESCENTE)!");
+              carregaHistoricoFiltroNotaDecrescente();}}
+              title="Filtro Nota (DECRESCENTE)"
+              color="#2196f3"
+              accessibilityLabel="Filtrando Nota!"
+              />
+    </View>
+    <View style={{ marginVertical: 4, marginTop: 10 }}>
+        <Button
+            onPress={() => 
+              {window.alert("Notas Sem filtro!");
+              carregaHistorico();}}
+              title="Reset filtro nota!"
+              color="#2196f3"
+              accessibilityLabel="Filtrando Nota!"
+              />
     </View>
     <FlatList
         data={historico}
