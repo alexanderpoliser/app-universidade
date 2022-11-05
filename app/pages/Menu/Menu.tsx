@@ -14,6 +14,7 @@ import Historico from "../Historico/Historico";
 import DetalheTurma from "../DetalhesTurma/DetalhesTurma";
 import DetalhesHistorico from "../DetelhesHistorico/DetalhesHistorico";
 import EditaHistorico from "../EditaHistorico/EditaHistorico";
+import HistoricoFiltro from "../HistoricoFiltro/HistoricoFiltro";
 
 const Stack = createNativeStackNavigator();
 
@@ -59,6 +60,13 @@ function Menu(props: any) {
           color="#2196f3"
         />
       </View>
+      <View style={{ marginVertical: 4 }}>
+        <Button
+          title="Historico - Filtro"
+          onPress={() => props.navigation.navigate("Historico - Filtro")}
+          color="#2196f3"
+        />
+      </View>
     </View>
   );
 }
@@ -76,6 +84,7 @@ export default function App() {
         <Stack.Screen name="Edita Historico" component={EditaHistorico} />
         <Stack.Screen name="Turma" component={Turma} />
         <Stack.Screen name="Historico" component={Historico} />
+        <Stack.Screen name="Historico - Filtro" component={HistoricoFiltro} />
       </Stack.Navigator>
     </NavigationContainer>
   );
