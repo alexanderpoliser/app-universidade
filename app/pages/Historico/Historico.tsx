@@ -104,7 +104,7 @@ export default function App({ route, navigation }: any) {
       <TextInput
         value={matricula}
         style={styles.TextInput}
-        placeholder="Digite a matricula!"
+        placeholder="Digite a matricula do aluno!"
         onChangeText={(text) => {
           setMatricula(text);
         }}
@@ -112,7 +112,7 @@ export default function App({ route, navigation }: any) {
       <TextInput
         value={frequencia}
         style={styles.TextInput}
-        placeholder="Digite a frequência!"
+        placeholder="Digite a frequência do aluno!"
         onChangeText={(text) => {
           setFrequencia(text);
         }}
@@ -120,7 +120,7 @@ export default function App({ route, navigation }: any) {
       <TextInput
         value={nota}
         style={styles.TextInput}
-        placeholder="Digite a nota!"
+        placeholder="Digite a nota do aluno!"
         onChangeText={(text) => {
           setNota(text);
         }}

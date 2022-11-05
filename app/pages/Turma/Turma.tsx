@@ -87,7 +87,7 @@ export default function App({ navigation }: any) {
       <TextInput
         value={ano}
         style={styles.TextInput}
-        placeholder="Digite seu ano!"
+        placeholder="Digite o ano de início da turma!"
         onChangeText={(text) => {
           setAno(text);
         }}
@@ -95,7 +95,7 @@ export default function App({ navigation }: any) {
       <TextInput
         value={horario}
         style={styles.TextInput}
-        placeholder="Digite o horário!"
+        placeholder="Digite o horário da aula!"
         onChangeText={(text) => {
           setHorario(text);
         }}
