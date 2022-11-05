@@ -5,6 +5,6 @@ export default interface Historico {
   matricula: String;
   cod_turma: String;
   frequencia: String;
-  nota: String;
+  nota: string;
   changeDeletaState: any;
 }

@@ -6,6 +6,7 @@ import {
   FlatList,
   useWindowDimensions,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 
 import { collection, getDocs} from "firebase/firestore";
@@ -48,7 +49,7 @@ export default function App({ navigation }: any) {
         });
       });
       listHistoricos.sort(
-        (h1, h2) => (h1.nota < h2.nota) ? 1 : (h1.nota > h2.nota) ? -1 : 0);
+        (h1,h2) => (parseFloat(h1.nota) < parseFloat(h2.nota)) ? 1 : (parseFloat(h1.nota) > parseFloat(h2.nota)) ? -1 : 0);
       setHistorico(listHistoricos);
       setLoading(false);
     });
@@ -63,7 +64,7 @@ export default function App({ navigation }: any) {
   }
 
   return (
-    <View>
+    <ScrollView>
     <View style={{ marginVertical: 4, marginTop: 10 }}>
         <Button
             onPress={() => 
@@ -90,6 +91,6 @@ export default function App({ navigation }: any) {
             </>
         )}
     />
-    </View>
+    </ScrollView>
   );
 }
