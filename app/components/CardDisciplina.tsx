@@ -14,8 +14,11 @@ export default function App(props: Disciplina) {
         borderRadius: 20,
       }}
     >
-      <Text style={{ fontWeight: "500" }}>{props.nome_disc}</Text>
-      <Text>{props.carga_hor}</Text>
+      <Text style={{ fontWeight: "500" }}>Disciplina: {props.nome_disc}</Text>
+      <Text style={{ fontWeight: "500" }}>
+        Código da disciplina: {props.key_value}
+      </Text>
+      <Text>Carga horária: {props.carga_hor} hora(s)</Text>
     </View>
   );
 }

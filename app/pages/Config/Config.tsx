@@ -3,7 +3,7 @@ import { View, Text, Button, Image } from "react-native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function App() {
+export default function App({ navigator }: any) {
   const defaultImageBackground = {
     background1: require("../../../assets/bg/bg-1.jpg"),
   };
@@ -24,7 +24,7 @@ export default function App() {
       console.log("Houve um erro", error);
     }
   };
-  
+
   const salvaBackground2 = async () => {
     try {
       const strBackground = JSON.stringify(imageBackground2);
@@ -33,6 +33,7 @@ export default function App() {
       console.log("Houve um erro", error);
     }
   };
+
   const salvaBackground3 = async () => {
     try {
       const strBackground = JSON.stringify(imageBackground3);
@@ -67,9 +68,24 @@ export default function App() {
   return (
     <View style={{ flex: 1, alignItems: "center", padding: 5 }}>
       <Text style={{ color: "white" }}>Escolha um Plano de fundo abaixo:</Text>
-      <Button title="Background 1" onPress={() => changeBackground(1)}></Button>
-      <Button title="Background 2" onPress={() => changeBackground(2)}></Button>
-      <Button title="Background 3" onPress={() => changeBackground(3)}></Button>
+      <View style={{ marginVertical: 4, marginTop: 10 }}>
+        <Button
+          title="Background 1"
+          onPress={() => changeBackground(1)}
+        ></Button>
+      </View>
+      <View style={{ marginVertical: 4 }}>
+        <Button
+          title="Background 2"
+          onPress={() => changeBackground(2)}
+        ></Button>
+      </View>
+      <View style={{ marginVertical: 4 }}>
+        <Button
+          title="Background 3"
+          onPress={() => changeBackground(3)}
+        ></Button>
+      </View>
     </View>
   );
 }

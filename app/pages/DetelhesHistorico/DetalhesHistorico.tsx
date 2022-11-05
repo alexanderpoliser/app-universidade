@@ -7,34 +7,39 @@ import {
   FlatList,
   ActivityIndicator,
   useWindowDimensions,
-  Text
+  Text,
 } from "react-native";
 
-import {collection, query, where, getDocs,documentId } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  documentId,
+} from "firebase/firestore";
 import db from "../../../services/firebase/firebase";
 import Aluno from "../../models/Aluno";
 import CardAluno from "../../components/CardDetalheAluno";
 import CardHistorico from "../../components/CardHistorico";
 
-export default function App({route}: any) {
-  const historicoId = route.params['cod_turma']
+export default function App({ route }: any) {
+  const historicoId = route.params["cod_turma"];
 
-  
   const [loading, setLoading] = React.useState(true);
   const [nota, setNota] = React.useState("");
   const [frequencia, setFrequencia] = React.useState("");
   const [codTurma, setCodTurma] = React.useState("");
   const { width, height } = useWindowDimensions();
-  
-  async function getMatricula() {    
-    const turmaId = route.params['cod_turma']    
+
+  async function getMatricula() {
+    const turmaId = route.params["cod_turma"];
     const historicoRef = collection(db, "Historico");
     const q = query(historicoRef, where("matricula", "==", turmaId));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      setCodTurma(doc.data()["cod_turma"])
-      setNota(doc.data()["nota"])
-      setFrequencia(doc.data()["frequencia"])
+      setCodTurma(doc.data()["cod_turma"]);
+      setNota(doc.data()["nota"]);
+      setFrequencia(doc.data()["frequencia"]);
       setLoading(false);
     });
   }
@@ -53,13 +58,15 @@ export default function App({route}: any) {
 
   return (
     <View>
-        <CardHistorico
-              matricula={historicoId}
-              cod_turma={codTurma}
-              frequencia={frequencia}
-              nota={nota}
-            />
+      <CardHistorico
+        matricula={historicoId}
+        cod_turma={codTurma}
+        frequencia={frequencia}
+        nota={nota}
+        navigation={undefined}
+        key_value={undefined}
+        changeDeletaState={undefined}
+      />
     </View>
   );
 }
-

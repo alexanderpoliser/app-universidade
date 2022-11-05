@@ -13,7 +13,7 @@ import db from "../../../services/firebase/firebase";
 import CardAluno from "../../components/CardAluno";
 import Aluno from "../../models/Aluno";
 
-export default function App() {
+export default function App({ navigation }: any) {
   const [nome, setNome] = React.useState("");
   const [foto, setFoto] = React.useState("");
   const [cidade, setCidade] = React.useState("");
@@ -62,7 +62,8 @@ export default function App() {
         foto: foto,
         cidade: cidade,
         endereco: endereco,
-      }).then(async function () {{
+      }).then(async function () {
+        {
           window.alert("Aluno cadastrado!");
           limpaCampos();
           carregaAlunos();
@@ -90,7 +91,7 @@ export default function App() {
       <TextInput
         style={styles.TextInput}
         value={nome}
-        placeholder="Digite seu nome!"
+        placeholder="Digite o nome do Aluno!"
         onChangeText={(text) => {
           setNome(text);
         }}
@@ -98,7 +99,7 @@ export default function App() {
       <TextInput
         value={foto}
         style={styles.TextInput}
-        placeholder="Digite o link para sua foto!"
+        placeholder="Digite o link para a foto do aluno!"
         onChangeText={(text) => {
           setFoto(text);
         }}
@@ -106,7 +107,7 @@ export default function App() {
       <TextInput
         value={cidade}
         style={styles.TextInput}
-        placeholder="Digite sua cidade!"
+        placeholder="Digite a cidade do aluno!"
         onChangeText={(text) => {
           setCidade(text);
         }}
@@ -114,7 +115,7 @@ export default function App() {
       <TextInput
         value={endereco}
         style={styles.TextInput}
-        placeholder="Digite seu endereço!"
+        placeholder="Digite o endereço do aluno!"
         onChangeText={(text) => {
           setEndereco(text);
         }}
@@ -135,6 +136,8 @@ export default function App() {
               foto={item.foto}
               cidade={item.cidade}
               endereco={""}
+              key_value={item.key}
+              navigation={navigation}
             />
           </>
         )}

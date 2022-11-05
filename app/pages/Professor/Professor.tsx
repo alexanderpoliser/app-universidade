@@ -84,7 +84,7 @@ export default function App() {
       <TextInput
         style={styles.TextInput}
         value={nome}
-        placeholder="Digite seu nome!"
+        placeholder="Digite o nome do professor!"
         onChangeText={(text) => {
           setNome(text);
         }}
@@ -92,7 +92,7 @@ export default function App() {
       <TextInput
         value={cidade}
         style={styles.TextInput}
-        placeholder="Digite sua cidade!"
+        placeholder="Digite a cidade do professor!"
         onChangeText={(text) => {
           setCidade(text);
         }}
@@ -100,7 +100,7 @@ export default function App() {
       <TextInput
         value={endereco}
         style={styles.TextInput}
-        placeholder="Digite seu endereço!"
+        placeholder="Digite o endereço do professor!"
         onChangeText={(text) => {
           setEndereco(text);
         }}
@@ -119,7 +119,8 @@ export default function App() {
             <CardProfessor
               nome={item.nome}
               cidade={item.cidade}
-              endereco={""}
+              endereco={item.cidade}
+              key_value={item.key}
             />
           </>
         )}

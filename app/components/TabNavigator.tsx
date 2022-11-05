@@ -49,10 +49,11 @@ function Tabs() {
 }
 
 export default function App() {
-  const defaultImageBackground = { background1: require("../../assets/bg/bg-1.jpg")};
+  const defaultImageBackground = {
+    background1: require("../../assets/bg/bg-1.jpg"),
+  };
   const strBackground = JSON.stringify(defaultImageBackground);
   const [background, setBackground] = React.useState<String>(strBackground);
-
 
   const setDefaultBackground = async (key: string) => {
     try {
@@ -61,7 +62,7 @@ export default function App() {
         if (value == null) {
           salvaBackground();
         }
-      })      
+      });
     } catch (erro) {
       console.log("Erro");
     }
@@ -76,20 +77,21 @@ export default function App() {
       console.log("Houve um erro", error);
     }
   };
-  
+
   const getImageBackground = async (key: string) => {
     try {
       const imageBackground = AsyncStorage.getItem(key);
       imageBackground.then((background) => {
         const backgroundObject = JSON.parse(background!);
-        const getBackgroundObjectValue: String[] = Object.values(backgroundObject);
+        const getBackgroundObjectValue: String[] =
+          Object.values(backgroundObject);
         setBackground(getBackgroundObjectValue[0]);
       });
     } catch (erro) {
       console.log("Erro");
     }
   };
-  
+
   React.useEffect(() => {
     getImageBackground("@background");
     setDefaultBackground("@background");

@@ -106,6 +106,7 @@ export default function App() {
             <CardDisciplina
               nome_disc={item.nome_disc}
               carga_hor={item.carga_hor}
+              key_value={item.key}
             />
           </>
         )}

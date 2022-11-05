@@ -16,7 +16,7 @@ import db from "../../../services/firebase/firebase";
 import Turma from "../../models/Turma";
 import CardTurma from "../../components/CardTurma";
 
-export default function App({navigation}:any) {
+export default function App({ navigation }: any) {
   const [codDisc, setCodDisc] = React.useState("");
   const [codProf, setcodProf] = React.useState("");
   const [ano, setAno] = React.useState("");
@@ -63,7 +63,7 @@ export default function App({navigation}:any) {
         cod_disc: codDisc,
         cod_prof: codProf,
         ano: ano,
-        horario: horario
+        horario: horario,
       }).then(async function () {
         limpaCampos();
         carregaTurma();
@@ -84,7 +84,6 @@ export default function App({navigation}:any) {
 
   return (
     <View style={{ flex: 1 }}>
-      
       <TextInput
         value={ano}
         style={styles.TextInput}
@@ -130,12 +129,12 @@ export default function App({navigation}:any) {
           <>
             <CardTurma
               ano={item.ano}
-              horario={item.horario} 
+              horario={item.horario}
               cod_disc={item.cod_disc}
               cod_prof={item.cod_prof}
               key_value={item.key}
               navigation={navigation}
-              />
+            />
           </>
         )}
       />

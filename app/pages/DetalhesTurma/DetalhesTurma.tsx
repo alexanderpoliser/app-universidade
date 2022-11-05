@@ -1,28 +1,29 @@
 import React from "react";
 import {
   View,
-  Button,
-  TextInput,
-  StyleSheet,
   FlatList,
   ActivityIndicator,
   useWindowDimensions,
-  Text
 } from "react-native";
 
-import {collection, query, where, doc, getDoc, getDocs,documentId } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  documentId,
+} from "firebase/firestore";
 import db from "../../../services/firebase/firebase";
 import Aluno from "../../models/Aluno";
 import CardDetalheAluno from "../../components/CardDetalheAluno";
 
-export default function App({route, navigation}: any) {
+export default function App({ route, navigation }: any) {
   const [loading, setLoading] = React.useState(false);
   const [alunos, setAlunos] = React.useState<Aluno[]>([]);
   const { width, height } = useWindowDimensions();
 
-
   async function getMatricula() {
-    const turmaId = route.params['cod_turma']    
+    const turmaId = route.params["cod_turma"];
     const historicoRef = collection(db, "Historico");
     const q = query(historicoRef, where("cod_turma", "==", turmaId));
     const querySnapshot = await getDocs(q);
@@ -30,10 +31,9 @@ export default function App({route, navigation}: any) {
       getAlunos(doc.data()["matricula"]);
     });
   }
-    
+
   const listAlunos: Aluno[] = [];
   async function getAlunos(matricula: string) {
-  
     const alunoRef = collection(db, "Aluno");
     const q = query(alunoRef, where(documentId(), "==", matricula));
     await getDocs(q).then((snapshot) => {
@@ -45,9 +45,9 @@ export default function App({route, navigation}: any) {
       });
       setAlunos(listAlunos);
       setLoading(false);
-    });    
+    });
   }
-  
+
   React.useEffect(() => {
     getMatricula();
   }, []);
@@ -60,10 +60,9 @@ export default function App({route, navigation}: any) {
     );
   }
 
-
   return (
     <View style={{ flex: 1 }}>
-        <FlatList
+      <FlatList
         data={alunos}
         renderItem={({ item }) => (
           <>
@@ -71,7 +70,7 @@ export default function App({route, navigation}: any) {
               nome={item.nome}
               foto={item.foto}
               cidade={item.cidade}
-              endereco={""}
+              endereco={item.endereco}
               key_value={item.key}
               navigation={navigation}
             />
@@ -81,14 +80,3 @@ export default function App({route, navigation}: any) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  TextInput: {
-    borderWidth: 3,
-    borderColor: "#D9D9D9",
-    borderRadius: 5,
-    margin: 10,
-    padding: 3,
-    color: "white",
-  },
-});

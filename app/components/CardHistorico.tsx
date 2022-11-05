@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Button } from "react-native";
 import Historico from "../models/Historico";
 
 import { doc, getDoc } from "firebase/firestore";
@@ -38,7 +38,7 @@ export default function App(props: Historico) {
       <Text style={{ fontWeight: "500" }}>
         Código da Turma: {props.cod_turma}
       </Text>
-      <Text>Nome:{nomeAluno}</Text>
+      <Text>Nome: {nomeAluno}</Text>
       <Text>Nota: {props.nota}</Text>
       <Text>Frequência: {props.frequencia}</Text>
     </View>

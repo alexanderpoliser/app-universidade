@@ -15,7 +15,10 @@ export default function App(props: Professor) {
       }}
     >
       <Text style={{ fontWeight: "500" }}>{props.nome}</Text>
-      <Text>{props.cidade}</Text>
+      <Text style={{ fontWeight: "500" }}>
+        Código do professor: {props.key_value}
+      </Text>
+      <Text>Cidade: {props.cidade}</Text>
     </View>
   );
 }
