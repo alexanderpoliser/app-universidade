@@ -14,15 +14,17 @@ import { collection, getDocs, addDoc } from "firebase/firestore";
 import db from "../../../services/firebase/firebase";
 
 import Historico from "../../models/Historico";
-import CardHistorico from "../../components/CardHistorico";
+import CardAlteraHistorico from "../../components/CardAlteraHistorico";
 
-export default function App() {
+export default function App({ route, navigation }: any) {
   const [matricula, setMatricula] = React.useState("");
   const [codTurma, setCodTurma] = React.useState("");
   const [frequencia, setFrequencia] = React.useState("");
   const [nota, setNota] = React.useState("");
   const [historico, setHistorico] = React.useState<Historico[]>([]);
   const [loading, setLoading] = React.useState(true);
+  const [deletaState, setDeletaState] = React.useState(false);
+  let editaState = route.params["editaState"];
   const { width, height } = useWindowDimensions();
   const collecRef = collection(db, "Historico");
 
@@ -41,6 +43,9 @@ export default function App() {
       });
       setHistorico(listHistoricos);
       setLoading(false);
+      navigation.setParams({
+        editaState: false,
+      });
     });
   }
   if (loading) {
@@ -50,6 +55,15 @@ export default function App() {
       </View>
     );
   }
+  if (editaState) {
+    carregaHistorico();
+  }
+
+  if (deletaState == true) {
+    carregaHistorico();
+    setDeletaState(false);
+  }
+
   function limpaCampos() {
     setMatricula("");
     setCodTurma("");
@@ -118,7 +132,6 @@ export default function App() {
           setCodTurma(text);
         }}
       />
-
       <Button
         onPress={validaCampos}
         title="Cadastrar Historico"
@@ -129,11 +142,16 @@ export default function App() {
         data={historico}
         renderItem={({ item }) => (
           <>
-            <CardHistorico
+            <CardAlteraHistorico
               matricula={item.matricula}
               cod_turma={item.cod_turma}
               frequencia={item.frequencia}
               nota={item.nota}
+              key_value={item.key}
+              navigation={navigation}
+              changeDeletaState={(deletaState: boolean) =>
+                setDeletaState(deletaState)
+              }
             />
           </>
         )}
