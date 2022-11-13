@@ -1,8 +1,7 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
-import Aluno from "../models/Aluno";
+import { View, Text, Image, Button } from "react-native";
 
-export default function App(props: Aluno) {
+export default function App(props: any) {
   return (
     <View
       style={{
@@ -27,10 +26,17 @@ export default function App(props: Aluno) {
       </View>
 
       <Text style={{ fontWeight: "500" }}>{props.nome}</Text>
-      <Text style={{ fontWeight: "500" }}>
-        Matrícula do aluno: {props.key_value}
-      </Text>
-      <Text>Cidade: {props.cidade}</Text>
+      <Text>{props.cidade}</Text>
+      <Button
+        onPress={() =>
+          props.navigation.navigate("Detalhe Historico", {
+            cod_turma: props.key_value,
+          })
+        }
+        title="Detalhes do histórico"
+        color="#2196f3"
+        accessibilityLabel="Detalhes do histórico"
+      />
     </View>
   );
 }

@@ -1,42 +1,44 @@
 import React from "react";
+
 import {
   View,
   Button,
   TextInput,
   StyleSheet,
   FlatList,
-  ActivityIndicator,
   useWindowDimensions,
+  ActivityIndicator,
 } from "react-native";
+
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import db from "../../../services/firebase/firebase";
-import CardAluno from "../../components/CardAluno";
-import Aluno from "../../models/Aluno";
 
-export default function App({ navigation }: any) {
+import Professor from "../../models/Professor";
+import CardProfessor from "../../components/CardProfessor";
+
+export default function App() {
   const [nome, setNome] = React.useState("");
-  const [foto, setFoto] = React.useState("");
-  const [cidade, setCidade] = React.useState("");
   const [endereco, setEndereco] = React.useState("");
-  const [alunos, setAlunos] = React.useState<Aluno[]>([]);
+  const [cidade, setCidade] = React.useState("");
+  const [professor, setProfessores] = React.useState<Professor[]>([]);
   const [loading, setLoading] = React.useState(true);
-  const collecRef = collection(db, "Aluno");
   const { width, height } = useWindowDimensions();
+  const collecRef = collection(db, "Professor");
 
   React.useEffect(() => {
-    carregaAlunos();
+    carregaProfessor();
   }, []);
 
-  function carregaAlunos() {
-    const listAlunos: Aluno[] = [];
+  function carregaProfessor() {
+    const listProfessores: Professor[] = [];
     getDocs(collecRef).then((snapshot) => {
       snapshot.forEach((documentSnapshot) => {
-        listAlunos.push({
-          ...(documentSnapshot.data() as Aluno),
+        listProfessores.push({
+          ...(documentSnapshot.data() as Professor),
           key: documentSnapshot.id,
         });
       });
-      setAlunos(listAlunos);
+      setProfessores(listProfessores);
       setLoading(false);
     });
   }
@@ -47,43 +49,34 @@ export default function App({ navigation }: any) {
       </View>
     );
   }
-
   function limpaCampos() {
     setNome("");
-    setFoto("");
-    setCidade("");
     setEndereco("");
+    setCidade("");
   }
 
-  async function cadastrarAluno() {
+  async function cadastrarProfessor() {
     try {
-      addDoc(collection(db, "Aluno"), {
+      addDoc(collection(db, "Professor"), {
         nome: nome,
-        foto: foto,
-        cidade: cidade,
         endereco: endereco,
+        cidade: cidade,
       }).then(async function () {
-        {
-          window.alert("Aluno cadastrado!");
-          limpaCampos();
-          carregaAlunos();
-        }
+        limpaCampos();
+        carregaProfessor();
       });
     } catch (error) {
-      window.alert("Não foi possível cadastrar o aluno");
+      window.alert("Não foi possível cadastrar o professor");
     }
   }
-
   function validaCampos() {
     if (nome == "") {
-      window.alert("Insira um nome válido!");
-    } else if (foto == "") {
-      window.alert("Insira uma foto válida!");
-    } else if (cidade == "") {
-      window.alert("Insira uma cidade válida!");
+      window.alert("Insira um nome de disciplina válido!");
     } else if (endereco == "") {
-      window.alert("Insira um endereço válido!");
-    } else console.log(cadastrarAluno());
+      window.alert("Insira uma carga horária válida!");
+    } else if (cidade == "") {
+      window.alert("Insira uma carga horária válida!");
+    } else cadastrarProfessor();
   }
 
   return (
@@ -91,23 +84,15 @@ export default function App({ navigation }: any) {
       <TextInput
         style={styles.TextInput}
         value={nome}
-        placeholder="Digite o nome do Aluno!"
+        placeholder="Digite o nome do professor!"
         onChangeText={(text) => {
           setNome(text);
         }}
       />
       <TextInput
-        value={foto}
-        style={styles.TextInput}
-        placeholder="Digite o link para a foto do aluno!"
-        onChangeText={(text) => {
-          setFoto(text);
-        }}
-      />
-      <TextInput
         value={cidade}
         style={styles.TextInput}
-        placeholder="Digite a cidade do aluno!"
+        placeholder="Digite a cidade do professor!"
         onChangeText={(text) => {
           setCidade(text);
         }}
@@ -115,7 +100,7 @@ export default function App({ navigation }: any) {
       <TextInput
         value={endereco}
         style={styles.TextInput}
-        placeholder="Digite o endereço do aluno!"
+        placeholder="Digite o endereço do professor!"
         onChangeText={(text) => {
           setEndereco(text);
         }}
@@ -123,21 +108,19 @@ export default function App({ navigation }: any) {
 
       <Button
         onPress={validaCampos}
-        title="Cadastrar Aluno"
+        title="Cadastrar Professor"
         color="#2196f3"
-        accessibilityLabel="Cadastrar Aluno"
+        accessibilityLabel="Cadastrar Professor"
       />
       <FlatList
-        data={alunos}
+        data={professor}
         renderItem={({ item }) => (
           <>
-            <CardAluno
+            <CardProfessor
               nome={item.nome}
-              foto={item.foto}
               cidade={item.cidade}
-              endereco={""}
+              endereco={item.cidade}
               key_value={item.key}
-              navigation={navigation}
             />
           </>
         )}

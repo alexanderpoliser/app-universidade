@@ -1,7 +1,9 @@
 export default interface Aluno {
-    key?: String,
-    nome: String,
-    foto: String,
-    endereco: String,
-    cidade: String
+  navigation: any;
+  key_value: any;
+  key?: String;
+  nome: String;
+  foto: String;
+  endereco: String;
+  cidade: String;
 }
