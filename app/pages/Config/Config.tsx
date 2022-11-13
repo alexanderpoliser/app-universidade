@@ -72,18 +72,21 @@ export default function App({ navigator }: any) {
         <Button
           title="Background 1"
           onPress={() => changeBackground(1)}
+          accessibilityLabel="Background 1"
         ></Button>
       </View>
       <View style={{ marginVertical: 4 }}>
         <Button
           title="Background 2"
           onPress={() => changeBackground(2)}
+          accessibilityLabel="Background 2"
         ></Button>
       </View>
       <View style={{ marginVertical: 4 }}>
         <Button
           title="Background 3"
           onPress={() => changeBackground(3)}
+          accessibilityLabel="Background 3"
         ></Button>
       </View>
     </View>

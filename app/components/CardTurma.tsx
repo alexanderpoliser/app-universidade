@@ -61,7 +61,7 @@ export default function App(props: any) {
         }
         title="Detalhe turma"
         color="#2196f3"
-        accessibilityLabel="Learn more about this purple button"
+        accessibilityLabel="Detalhe turma"
       />
     </View>
   );

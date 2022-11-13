@@ -26,6 +26,7 @@ function Menu(props: any) {
           title="Aluno"
           onPress={() => props.navigation.navigate("Aluno")}
           color="#2196f3"
+          accessibilityLabel="Navegar para Aluno"
         />
       </View>
       <View style={{ marginVertical: 4 }}>
@@ -33,6 +34,7 @@ function Menu(props: any) {
           title="Professor"
           onPress={() => props.navigation.navigate("Professor")}
           color="#2196f3"
+          accessibilityLabel="Navegar para Professor"
         />
       </View>
       <View style={{ marginVertical: 4 }}>
@@ -40,6 +42,7 @@ function Menu(props: any) {
           title="Disciplina"
           onPress={() => props.navigation.navigate("Disciplina")}
           color="#2196f3"
+          accessibilityLabel="Navegar para Disciplina"
         />
       </View>
       <View style={{ marginVertical: 4 }}>
@@ -47,24 +50,27 @@ function Menu(props: any) {
           title="Turma"
           onPress={() => props.navigation.navigate("Turma")}
           color="#2196f3"
+          accessibilityLabel="Navegar para Turma"
         />
       </View>
       <View style={{ marginVertical: 4 }}>
         <Button
-          title="Historico"
+          title="Histórico"
           onPress={() =>
             props.navigation.navigate("Historico", {
               editaState: false,
             })
           }
           color="#2196f3"
+          accessibilityLabel="Navegar para Histórico"
         />
       </View>
       <View style={{ marginVertical: 4 }}>
         <Button
-          title="Historico - Filtro"
+          title="Histórico - Filtro"
           onPress={() => props.navigation.navigate("Historico - Filtro")}
           color="#2196f3"
+          accessibilityLabel="Navegar para Histórico com Filtro"
         />
       </View>
     </View>

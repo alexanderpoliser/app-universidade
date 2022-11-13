@@ -64,6 +64,7 @@ export default function App(props: Historico) {
               cod_historico: props.key_value,
             })
           }
+          accessibilityLabel="Editar histórico"
         ></Button>
       </View>
       <View
@@ -79,6 +80,7 @@ export default function App(props: Historico) {
           title="Deletar histórico"
           color="#2196f3"
           onPress={() => deletarHistorico()}
+          accessibilityLabel="Deletar histórico"
         ></Button>
       </View>
     </View>
