@@ -21,25 +21,25 @@ import db from "../../../services/firebase/firebase";
 import Aluno from "../../models/Aluno";
 import CardAluno from "../../components/CardDetalheAluno";
 import CardHistorico from "../../components/CardHistorico";
+import Historico from "../../models/Historico";
 
 export default function App({ route }: any) {
-  const historicoId = route.params["cod_turma"];
-
   const [loading, setLoading] = React.useState(true);
-  const [nota, setNota] = React.useState("");
-  const [frequencia, setFrequencia] = React.useState("");
-  const [codTurma, setCodTurma] = React.useState("");
+  const [historicos, setHistoricos] = React.useState<Historico[]>([]);
   const { width, height } = useWindowDimensions();
 
   async function getMatricula() {
+    const listHistorico: Historico[] = []; 
     const turmaId = route.params["cod_turma"];
     const historicoRef = collection(db, "Historico");
     const q = query(historicoRef, where("matricula", "==", turmaId));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      setCodTurma(doc.data()["cod_turma"]);
-      setNota(doc.data()["nota"]);
-      setFrequencia(doc.data()["frequencia"]);
+      listHistorico.push({
+          ...(doc.data() as Historico),
+          key: doc.id,
+        });
+      setHistoricos(listHistorico);
       setLoading(false);
     });
   }
@@ -58,14 +58,21 @@ export default function App({ route }: any) {
 
   return (
     <View>
-      <CardHistorico
-        matricula={historicoId}
-        cod_turma={codTurma}
-        frequencia={frequencia}
-        nota={nota}
-        navigation={undefined}
-        key_value={undefined}
-        changeDeletaState={undefined}
+       <FlatList
+        data={historicos}
+        renderItem={({ item }) => (
+          <>
+            <CardHistorico
+            matricula={item.matricula}
+            cod_turma={item.cod_turma}
+            frequencia={item.frequencia}
+            nota={item.nota}
+            navigation={undefined}
+            key_value={undefined}
+            changeDeletaState={undefined}
+          />
+          </>
+        )}
       />
     </View>
   );
